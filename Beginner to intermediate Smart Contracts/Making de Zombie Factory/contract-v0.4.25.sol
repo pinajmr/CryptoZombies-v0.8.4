@@ -3,7 +3,7 @@ pragma solidity ^0.4.25;
 
 contract ZombieFactory {
 
-    // Declara nuestro evento aquí
+    //Event: warn that a zombie was created
     event NewZombie(uint zombieId,string name,uint dna);
     uint dnaDigits = 16;
     uint dnaModulus = 10 ** dnaDigits;
@@ -16,11 +16,13 @@ contract ZombieFactory {
     Zombie[] public zombies;
 
     function _createZombie(string _name, uint _dna) private {
-        uint id = zombies.push(Zombie(_name, _dna)) - 1;
-        // y lánzalo aquí
+        uint id = zombies.push(Zombie(_name, _dna)) - 1; //Add zombie in array
+
         emit NewZombie(id,_name,_dna);
     }
 
+    //view: only can see the data but cannot edits
+    //pure: You cannot access
     function _generateRandomDna(string _str) private view returns (uint) {
         uint rand = uint(keccak256(abi.encodePacked(_str)));
         return rand % dnaModulus;
@@ -30,3 +32,6 @@ contract ZombieFactory {
         uint randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
     }
+//Keccak256 is the hash function, which is a version of SHA3.
+//A hash function basically maps an input into a random 256-bit hexadecimal number.
+
