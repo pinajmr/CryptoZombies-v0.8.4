@@ -2,8 +2,8 @@ pragma solidity ^0.8.4;
 
 import "./zombiefactory.sol";
 
-abstract contract KittyInterface { //abstract
-  function getKitty(uint256 _id) virtual  external view returns (
+abstract contract KittyInterface { // $/ Change : type abstract
+  function getKitty(uint256 _id) virtual  external view returns ( // $/Change: use virtual
     bool isGestating,
     bool isReady,
     uint256 cooldownIndex,
@@ -28,7 +28,7 @@ contract ZombieFeeding is ZombieFactory {
     Zombie storage myZombie = zombies[_zombieId];
     _targetDna = _targetDna % dnaModulus;
     uint newDna = (myZombie.dna + _targetDna) / 2;
-    // Añade una sentencia if
+    //Change: use encode
     if (keccak256(abi.encodePacked(_species))== keccak256("kitty")){
       newDna = newDna - newDna % 100 + 99;
     }

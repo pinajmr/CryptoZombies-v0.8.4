@@ -17,6 +17,9 @@ contract ZombieFactory {
     mapping (uint => address) public zombieToOwner;
     mapping (address => uint) ownerZombieCount;
 
+    
+    //Internal:internal is the same as private, except that it's also accessible to contracts that inherit from this contract
+    //External:external is similar to public, except that these functions can ONLY be called outside the contract — they can't be called by other functions inside that contract
     function _createZombie(string memory _name, uint _dna) internal {
         zombies.push(Zombie(_name, _dna)); 
         uint id = zombies.length - 1;
@@ -25,7 +28,8 @@ contract ZombieFactory {
         emit NewZombie(id,_name,_dna);
     }
 
-    
+    //Storage: save permment (state variable)
+    //memory: save temporal (internal function variable)
     function _generateRandomDna(string memory _str) private view returns (uint) {
         uint rand = uint(keccak256(abi.encodePacked(_str)));
         return rand % dnaModulus;
@@ -40,12 +44,8 @@ contract ZombieFactory {
 
 }
 //Keccak256  is used for comparative of string
-//Storage: save permment (state variable)
-//memory: save temporal (internal function variable)
-//Internal:internal is the same as private, except that it's also accessible to contracts that inherit from this contract
-//External:external is similar to public, except that these functions can ONLY be called outside the contract — they can't be called by other functions inside that contract
 //For our contract to talk to another contract on the blockchain that we don't own, first we need to define an interface
-//Solidity puedes devolver más de un valor en una funcióna.
+//Solidity can return many values
 
 
 //SPDX-License-Identifier: UNLICENSED
